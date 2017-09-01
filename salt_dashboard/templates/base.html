@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {% block title %}{% endblock %}
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <!-- Google fonts - Roboto -->
+    <link rel="stylesheet" href="/static/css/googlefont.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="/static/css/style.default.css">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="/static/css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+    <!-- Font Awesome CDN-->
+    <!-- you can replace it by local Font Awesome-->
+    <script src="/static/js/fontawesome.js"></script>
+</head>
+
+<body>
+    <!-- Side Navbar -->
+    {% include "sidebar.html" %}
+    <div class="basepage home-page">
+        <!-- Navtop-->
+        {% include "navtop.html" %}
+        <!-- Counts Section -->
+            <section class="dashboard-counts section-padding">
+            {% if user.is_authenticated  %}
+                <div class="container-fluid">
+                {% block main %}{% endblock %}
+                </div>
+            {% endif %}
+            {% block page-container %}{% endblock %}
+            </section>
+        <!-- Footer -->
+        {% include "footer.html" %}
+    </div>
+    <!-- Javascript files-->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/tether.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.cookie.js"></script>
+    <script src="/static/js/jquery.nicescroll.min.js"></script>
+    <script src="/static/js/Chart.min.js"></script>
+    <script src="/static/js/front.js"></script>
+
+    {% block scripts %}
+    {% endblock %}
+</body>
+
+</html>

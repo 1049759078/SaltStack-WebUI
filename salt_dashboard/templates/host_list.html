@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}
+<title>SaltStack｜主机</title>
+{% endblock %}
+{% block main %}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="h1">主机列表</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="btn-group">
+            <form action="." method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="按主机名称搜索..." id="hostname" name="hostname">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" type="submit"><span class="fa fa-search"></span></button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="btn-group float-right">
+            <a href="/asset/get_hostasset/?action=refresh" class="btn btn-success" role="button">采集主机</a>
+            <a class="btn btn-success" href="/admin/hostlist/hostlist/add/" target="_blank">
+                <span class="fa fa-plus"></span>&nbsp;主机</a>
+            <div class="btn-group dropdown">
+                <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span class="fa fa-filter"></span>&nbsp;机房</a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'host_list' %}">所有机房</a></li>
+                    {% for idc in idc_list %}
+                    <li><a href="{% url 'host_list' %}?idc_id={{ idc.id }}">{{ idc.idc_name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="btn-group dropdown">
+                <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span class="fa fa-filter"></span>&nbsp;维护人员</a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'host_list' %}">所有人员</a></li>
+                    {% for user in user_list %}
+                    <li><a href="{% url 'host_list' %}?user_id={{ user.id }}">{{ user.username }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="margin-top:15px;">
+    <div class="col-md-12">
+        {% if all_host %}
+        <table class="table table-bordered">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>IP地址</th>
+                    <th>主机名称</th>
+                    <th>使用状态</th>
+                    <th>所属机房</th>
+                    <th>维护人员</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="trtd">
+                {% for host in all_host.object_list %}
+                <tr class="table-active">
+                    <td>
+                        <a href="{% url 'hostasset_list' host.ip %}" title="详细信息">
+                            {{ host.ip }}
+                        </a>
+                    </td>
+                    <td>{{ host.ip.hostname }}</td>
+                    <td>{{ host.status }}</td>
+                    <td>{{ host.idc }}</td>
+                    <td>{{ host.maintainer }}</td>
+                    <td>
+                        <a class="btn btn-success btn-xs" href="/admin/hostlist/hostlist/{{ host.id }}/" target="_blank">
+                            <span class="fa fa-edit"></span>&nbsp;修&nbsp;改
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        <!--row end-->
+        <!--The pagination html -->
+        <div id="pagination">
+            {{ all_host.render }}
+        </div>
+    </div>
+</div>
+<!--row end-->
+{% endblock %}

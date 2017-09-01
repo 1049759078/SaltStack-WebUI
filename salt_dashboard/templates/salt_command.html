@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}
+<title>SaltStack｜命令列表</title>
+<style>
+    textarea {
+        white-space: pre;
+        width:100%;
+        height:450px;
+        background-color: black;
+        color: #fff !important;
+    }
+</style>
+{% endblock %}
+{% block main %}
+<div class="row">
+    <div class="col-md-4">
+        <h1 class="h1">Salt命令列表</h1>
+    </div>
+    <div class="col-md-8">
+        <div class="btn-group float-right">
+            <div class="btn-group">
+                <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">模块</a>
+                <ul class="dropdown-menu">
+                    <li id="model_li"><a href="{% url 'salt:command' %}">所有模块</a></li>
+                    {% for module in module_list %}
+                    <li id="model_li"><a href="{% url 'salt:command' %}?module_id={{ module.id }}">{{ module }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <a class="btn btn-success " href="/admin/app01/module/add/" target="_blank">
+                <span class="fa fa-plus"></span>&nbsp;模块</a>
+            <a class="btn btn-success " href="/admin/app01/command/add/" target="_blank">
+                <span class="fa fa-plus"></span>&nbsp;命令</a>
+            <a class="btn btn-success " href="{% url 'salt:command' %}?active=collect">采集信息</a>
+        </div>
+    </div>
+</div>
+{% if error %}<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert">&times;</a>{{ error }}</div>{% endif %}
+{% if success %}<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert">&times;</a>{{ success }}</div>{% endif %}
+<div class="row" style="margin-top:15px;">
+    <div class="col-md-12">
+         <table class="table table-bordered">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>类型</th>
+                    <th><a href="https://docs.saltstack.com/en/latest/ref/modules/all/index.html" title="官方模块文档" target="_blank" class="text-success">模块</a></th>
+                    <th>命令</th>
+                    <th>帮助文档</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            {% for cmd in cmd_list.object_list %}
+                <tbody>
+                    <tr class="table-active">
+                        <td>{{ cmd.module.client }}</td>
+                        <td>{{ cmd.module.name }}</td>
+                        <td>{{ cmd.cmd }}</td>
+                        <td><button class="btn btn-success btn-xs" onclick="cmd_help('{{ cmd.module.client }}','{{ cmd.cmd }}')"  data-toggle="modal" data-target="#cmd_modal">帮助文档</button></td>
+                        <td>
+                            <a class="btn btn-success btn-xs" href="/admin/app01/command/{{ cmd.id }}/" target="_blank">
+                                <span class="fa fa-edit"></span>&nbsp;修&nbsp;改
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+
+        <!--The pagination html -->
+        <div id="pagination">
+            {{ cmd_list.render }}
+        </div>
+
+    </div>
+</div>
+<!--row end-->
+<div class="modal fade" id="cmd_modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">
+            Salt命令<code>"<span id="cmd"></span>"</code>的帮助信息
+        </h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+        </button>
+      </div>
+      <div class="modal-body" id="doc">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{% endblock %}
+
+{% block scripts %}
+    <script>
+    //获取命令帮助信息功能
+        function cmd_help(client,cmd) {
+            $('#cmd').html(cmd);
+            $.getJSON("/salt/command/",{client:client,cmd:cmd},function(result){$('#doc').html(result);});
+            return false; //不刷新页面
+        }
+    </script>
+{% endblock %}

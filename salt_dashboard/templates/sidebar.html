@@ -1,0 +1,31 @@
+<nav class="side-navbar">
+    <div class="side-navbar-wrapper">
+        <div class="sidenav-header d-flex align-items-center justify-content-center">
+            <div class="sidenav-header-inner text-center"><img src="/static/img/head.png" alt="person" class="img-fluid rounded-circle">
+                <h2 class="h5 text-uppercase">SaltStack</h2><span class="text-uppercase">自动化运维平台</span>
+            </div>
+            <div class="sidenav-header-logo"><a href="{% url 'index' %}" class="brand-small text-center"> <strong>B</strong><strong class="text-primary">D</strong></a></div>
+        </div>
+        <div class="main-menu">
+            <ul id="side-main-menu" class="side-menu list-unstyled">
+                <li class="active"><a href="{% url 'index' %}"> <i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
+                <li> <a href="#asset-nav-list" data-toggle="collapse" aria-expanded="false"><i class="fa fa-server"></i><span>资产管理</span>
+                <div class="arrow pull-right"><i class="fa fa-angle-down"></i></div></a>
+                    <ul id="asset-nav-list" class="collapse list-unstyled">
+                        <li> <a href="{% url 'idc_list' %}">机房列表</a></li>
+                        <li> <a href="{% url 'host_list' %}">主机列表</a></li>
+                    </ul>
+                </li>
+                <li> <a href="#salt-nav-list" data-toggle="collapse" aria-expanded="false"><i class="fa fa-wrench"></i><span>运维操作</span>
+                <div class="arrow pull-right"><i class="fa fa-angle-down"></i></div></a>
+                    <ul id="salt-nav-list" class="collapse list-unstyled">
+                        <li> <a href="{% url 'salt:key_list' %}">Minions管理</a></li>
+                        <li> <a href="{% url 'salt:command' %}">命令列表</a></li>
+                        <li> <a href="{% url 'salt:execute' %}">执行命令</a></li>
+                    </ul>
+                </li>
+                <li> <a href="{% url 'salt:result' %}"> <i class="fa fa-history"></i><span>操作记录</span></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

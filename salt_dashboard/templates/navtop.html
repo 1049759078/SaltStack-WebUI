@@ -1,0 +1,26 @@
+<header class="header">
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="navbar-holder d-flex align-items-center justify-content-between">
+                <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i class="fa fa-bars"> </i></a>
+                    <a href="index.html" class="navbar-brand">
+                        <div class="brand-text hidden-sm-down"><strong class="text-primary">SaltStack</strong></div>
+                    </a>
+                </div>
+                <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item dropdown"><a href="#" class="nav-link logout" rel="nofollow" data-target="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hello&nbsp;{{ request.user.username }}<i class="fa fa-caret-down"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="/admin/">后台管理</a>
+                            <a class="dropdown-item" href="{% url 'change_pwd' %}">修改密码</a>
+                            <a class="dropdown-item" href="{% url 'logout' %}">注销</a>
+                        </div>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">登录</a></li>
+                {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

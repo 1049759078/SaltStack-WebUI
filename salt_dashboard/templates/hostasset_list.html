@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}
+<title>SaltStack｜主机详细信息</title>
+{% endblock %}
+{% block main %}
+<div class="col-md-8" style="margin:0px auto;">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="text-center">主机 {{ all_hostasset.ip }} 的详细信息</h4>
+      </div>
+      <div class="card-block">
+        <p class="card-text">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>IP地址：</b>{{ all_hostasset.ip }}</li>
+                <li class="list-group-item"><b>Minion ID：</b>{{ all_hostasset.hostname }}</li>
+                <li class="list-group-item"><b>计算机全称：</b>{{ all_hostasset.fqdn }}</li>
+                <li class="list-group-item"><b>域名：</b>{{ all_hostasset.domain }}</li>
+                <li class="list-group-item"><b>MAC地址：</b>{{ all_hostasset.macaddress }}</li>
+                <li class="list-group-item"><b>内存大小：</b>{{ all_hostasset.mem }}</li>
+                <li class="list-group-item"><b>系统名称：</b>{{ all_hostasset.os }}</li>
+                <li class="list-group-item"><b>系统架构：</b>{{ all_hostasset.osarch }}</li>
+                <li class="list-group-item"><b>系统版本：</b>{{ all_hostasset.osrelease }}</li>
+                <li class="list-group-item"><b>CPU型号：</b>{{ all_hostasset.cpu_model }}</li>
+                <li class="list-group-item"><b>产品型号：</b>{{ all_hostasset.productname }}</li>
+                <li class="list-group-item"><b>厂商：</b>{{ all_hostasset.manufacturer }}</li>
+                <li class="list-group-item"><b>虚拟环境：</b>{{ all_hostasset.virtual }}</li>
+            </ul>
+        </p>
+        <a href="{% url 'host_list' %}" class="btn btn-success">返回</a>
+      </div>
+    </div>
+</div>
+{% endblock %}
