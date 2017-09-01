@@ -5,7 +5,7 @@ admin使用了<a href="https://github.com/geex-arts/django-jet">django-jet</a></
 分页插件使用了<a href="https://github.com/jamespacileo/django-pure-pagination">django-pure-pagination</a>
 ### 部署步骤
 1. 新建mysql数据库,在setting.py文件的DATABASES中可设置数据库连接信息</br>
-2. 同步数据库</br>
+2. 同步数据库
 <code>
 $ python manage.py makemigrations
 $ python manage.py migrate
