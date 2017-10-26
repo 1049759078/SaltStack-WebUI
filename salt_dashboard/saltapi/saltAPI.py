@@ -58,7 +58,7 @@ class saltAPI:
                 else:
                     params['arg%s'%(a.index(i)+100)]=i
         if kwargs:
-            params=dict(params.items()+kwargs.items())
+            params=dict(list(params.items())+list(kwargs.items()))
         obj = urllib.parse.urlencode(params).encode(encoding='UTF8')
         ret = self.postRequest(obj)
         return ret
@@ -74,7 +74,7 @@ class saltAPI:
                 else:
                     params['arg%s'%a.index(i)]=i
         if kwargs:
-            params=dict(params.items()+kwargs.items())
+            params=dict(list(params.items())+list(kwargs.items()))
         obj = urllib.parse.urlencode(params).encode(encoding='UTF8')
         ret = self.postRequest(obj)
         return ret
