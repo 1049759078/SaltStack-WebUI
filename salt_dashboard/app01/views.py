@@ -91,16 +91,16 @@ def salt_key_fun(request):
                     if success:
                         minion.status='Unknown'
                         minion.save()
-                        result=u'KEY"%s"删除成功！'%minion.minion
+                        result='KEY"%s"删除成功！'%minion.minion
                     else:
-                        result=u'KEY"%s"删除失败！'%minion.minion
+                        result='KEY"%s"删除失败！'%minion.minion
                 elif active == 'accept':
                     success=sapi.accept_key(minion)
                     if success:
                         minions_collect(minion.minion,'Accepted')
-                        result=u'KEY"%s"接受成功！'%minion.minion
+                        result='KEY"%s"接受成功！'%minion.minion
                     else:
-                        result=u'KEY"%s"接受失败！'%minion.minion
+                        result='KEY"%s"接受失败！'%minion.minion
                 elif active == 'grains':
                     result=json.loads(minion.grains)
                 elif active == 'pillar':
@@ -176,7 +176,7 @@ def command(request):
                     if not command.doc:
                         command.doc=cs[c]
                         command.save()
-            context['success']=u'命令收集完成！'
+            context['success']='命令收集完成！'
         except Exception as error:
             context['error']=error
 
